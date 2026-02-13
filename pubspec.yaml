@@ -1,0 +1,35 @@
+name: islamic_hijri_calendar_rhg
+description: A beautiful, modern Islamic Hijri Calendar widget with multi-language support (Rohingya, English, Arabic), automatic Islamic events display, responsive design, and extensive customization options.
+version: 1.0.0
+homepage: https://github.com/arakaneserohingya/islamic_hijri_calendar_rhg
+issue_tracker: https://github.com/arakaneserohingya/islamic_hijri_calendar_rhg/issues
+documentation: https://pub.dev/documentation/islamic_hijri_calendar_rhg/latest/
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+  flutter: ">=3.22.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  intl: ^0.19.0
+  google_fonts: ^8.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+screenshots:
+  - description: 'Islamic Hijri Calendar in English showing February 2026 with Islamic events (Mid-Shaban and First of Ramadan)'
+    path: screenshots/simulator_screenshot_20ABFAB3-7E9B-4A13-B237-BD0DF545B9BC.png
+
+  - description: 'Islamic Hijri Calendar in Arabic (RTL layout) with localized month names and Arabic-Indic numerals'
+    path: screenshots/simulator_screenshot_5144459E-8207-47C1-AA93-E9B597F339D0.png
+
+  - description: 'Islamic Hijri Calendar in Rohingya Hanifi script with native numerals and RTL layout'
+    path: screenshots/simulator_screenshot_8861D4EC-F6B6-44B0-A60F-89B75B70F541.png
+
+flutter:
+#  assets:
+#    - assets/
