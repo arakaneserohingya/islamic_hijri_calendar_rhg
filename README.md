@@ -2,8 +2,6 @@
 
 A beautiful, modern Flutter widget for displaying the Islamic Hijri Calendar with multi-language support (Rohingya, English, Arabic), automatic Islamic events display, and extensive customization options.
 
-<img src="https://raw.githubusercontent.com/arakaneserohingya/islamic_hijri_calendar_rhg/main/assets/banner1.png"/>
-
 ## ✨ Features
 
 ### 🌍 Multi-Language Support
@@ -196,8 +194,6 @@ IslamicHijriCalendar(
 Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting a Pull Request.
 
 For detailed API documentation, see [API.md](API.md).
-
-[![Contributors](https://raw.githubusercontent.com/arakaneserohingya/islamic_hijri_calendar_rhg/refs/heads/main/assets/contributors.png)](https://github.com/arakaneserohingya/islamic_hijri_calendar_rhg/graphs/contributors)
 
 ## 📄 License
 
