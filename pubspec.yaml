@@ -1,7 +1,8 @@
 name: islamic_hijri_calendar_rhg
-description: A beautiful, modern Islamic Hijri Calendar widget with multi-language support (Rohingya, English, Arabic), automatic Islamic events display, responsive design, and extensive customization options.
+description: A modern Islamic Hijri Calendar widget with multi-language support (English, Arabic, Rohingya) and Islamic events.
 version: 1.0.0
 homepage: https://github.com/arakaneserohingya/islamic_hijri_calendar_rhg
+repository: https://github.com/arakaneserohingya/islamic_hijri_calendar_rhg
 issue_tracker: https://github.com/arakaneserohingya/islamic_hijri_calendar_rhg/issues
 documentation: https://pub.dev/documentation/islamic_hijri_calendar_rhg/latest/
 

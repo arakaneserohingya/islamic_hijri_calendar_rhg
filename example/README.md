@@ -1,16 +1,44 @@
-# example
+# Islamic Hijri Calendar Example
 
-A new Flutter project.
+A demonstration application showing how to integrate the `islamic_hijri_calendar_rhg` package into a Flutter app.
 
-## Getting Started
+## Features Demonstrated
 
-This project is a starting point for a Flutter application.
+- **Multi-language switching**: Seamlessly switch between English, Arabic, and Rohingya.
+- **Theme integration**: Syncs with the application's Material theme (light/dark mode).
+- **Date selection**: Handling callbacks for both Gregorian and Hijri date selection.
+- **Customization**: Demonstrates adjustment values and font customization.
 
-A few resources to get you started if this is your first Flutter project:
+## Running the Example
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/arakaneserohingya/islamic_hijri_calendar_rhg.git
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. Navigate to the example directory:
+   ```bash
+   cd islamic_hijri_calendar_rhg/example
+   ```
+
+3. Get dependencies:
+   ```bash
+   flutter pub get
+   ```
+
+4. Run the application:
+   ```bash
+   flutter run
+   ```
+
+## Key Files
+
+- `lib/main.dart`: Contains the full implementation of the example UI and calendar integration.
+- `pubspec.yaml`: Shows how to include the package as a local dependency.
+
+## Screenshots
+
+The example app showcases the calendar in several configurations:
+- **English**: Standard LTR layout.
+- **Arabic**: RTL layout with localized names.
+- **Rohingya**: RTL layout using Hanifi script.

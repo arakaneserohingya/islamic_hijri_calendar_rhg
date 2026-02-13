@@ -7,42 +7,95 @@ import 'hijri_view_model.dart';
 
 import 'date_functions.dart';
 
+/// A modern, customizable Islamic Hijri Calendar widget for Flutter.
+///
+/// This widget provides a complete calendar solution with:
+/// * Multi-language support (English, Arabic, and Rohingya).
+/// * Automatic display of major Islamic events.
+/// * Dual-view for both Hijri and Gregorian dates.
+/// * Support for Hanifi Rohingya script and numerals.
+/// * Responsive layouts for mobile and tablet/desktop.
+///
+/// Example usage:
+/// ```dart
+/// IslamicHijriCalendar(
+///   locale: 'en',
+///   isHijriView: true,
+///   highlightBorder: Colors.green,
+///   getSelectedEnglishDate: (date) => print('Selected: $date'),
+/// )
+/// ```
 class IslamicHijriCalendar extends StatefulWidget {
-  ///allowing users to set either the English calendar only or display the Hijri calendar alongside the English calendar
+  /// Whether to display Hijri dates alongside Gregorian dates.
+  ///
+  /// Defaults to `true`.
   final bool? isHijriView;
 
-  ///set selected date border color
+  /// The border color for the currently selected date or today's date.
+  ///
+  /// Defaults to `Colors.blue`.
   final Color highlightBorder;
 
-  ///set default date border color
+  /// The border color for regular (non-selected) dates.
+  ///
+  /// Defaults to `Color(0xfff2f2f2)`.
   final Color defaultBorder;
 
-  ///set today date text color
+  /// The text color used for important dates like today's date.
+  ///
+  /// Defaults to `Colors.white`.
   final Color highlightTextColor;
 
-  ///set others dates text color
+  /// The default text color for regular dates.
+  ///
+  /// Defaults to `Colors.black`.
   final Color defaultTextColor;
 
-  ///set default date background color
+  /// The background color for the calendar grid cells.
+  ///
+  /// Defaults to `Colors.white`.
   final Color defaultBackColor;
 
-  ///set hijri calendar adjustment value which is set  by user side
+  /// The adjustment value in days for the Hijri date.
+  ///
+  /// Some regions might require a ±1 or ±2 day adjustment based on
+  /// local moon sightings. Positive values move the date forward,
+  /// negative values move it backward.
+  ///
+  /// Defaults to `0`.
   final int adjustmentValue;
 
-  ///set it true if you want to use google fonts else false
+  /// Whether to use Google Fonts for typography.
+  ///
+  /// Set this to `true` if your [fontFamilyName] refers to a Google Font.
+  /// Defaults to `false`.
   final bool? isGoogleFont;
 
-  ///set your custom font family name or google font name
+  /// The font family name to be used for the calendar text.
+  ///
+  /// Can be a custom font defined in `pubspec.yaml` or a Google Font
+  /// if [isGoogleFont] is set to `true`.
   final String? fontFamilyName;
 
-  ///when user taps on date get selected date
+  /// Callback function triggered when a date is selected.
+  ///
+  /// Returns the selected [DateTime] in Gregorian format.
   final Function(DateTime selectedDate)? getSelectedEnglishDate;
 
-  ///when user taps on date get selected hijri date
+  /// Callback function triggered when a date is selected.
+  ///
+  /// Returns the selected [HijriDate] object.
   final Function(HijriDate selectedDate)? getSelectedHijriDate;
 
-  ///set dates which are not included in current month should show disabled or enabled
+  /// Whether to disable interaction and visually fade dates that are not
+  /// part of the current month being viewed.
+  ///
+  /// Defaults to `false`.
   final bool? isDisablePreviousNextMonthDates;
+
+  /// The locale code for the calendar (e.g., 'en', 'ar', or 'rhg').
+  ///
+  /// This determines the translations, numeral systems, and text direction.
   final String locale;
 
   const IslamicHijriCalendar({
@@ -551,9 +604,10 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
         textStyle = const TextStyle();
       }
     } else {
-      textStyle = (widget.fontFamilyName == null || widget.fontFamilyName!.isEmpty)
-          ? const TextStyle()
-          : TextStyle(fontFamily: widget.fontFamilyName!);
+      textStyle =
+          (widget.fontFamilyName == null || widget.fontFamilyName!.isEmpty)
+              ? const TextStyle()
+              : TextStyle(fontFamily: widget.fontFamilyName!);
     }
 
     return LayoutBuilder(builder: (context, constraints) {
