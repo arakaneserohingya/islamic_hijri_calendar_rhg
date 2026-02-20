@@ -3,12 +3,13 @@ import 'date_functions.dart';
 import 'hijri_calendar_config.dart';
 import 'hijri_date.dart';
 
+/// View model for the Hijri Calendar to manage state and logic.
 class HijriViewModel {
   ///adjustment value for hijri calendar
   int adjustmentValue = 0;
 
   ///each day header value
-  var headerOfDay = [
+  final List<String> headerOfDay = <String>[
     "Mon",
     "Tue",
     "Wed",
@@ -18,7 +19,8 @@ class HijriViewModel {
     "Sun",
   ];
 
-  var showOfDay = [
+  ///each day show value
+  final List<String> showOfDay = <String>[
     "Sun",
     "Mon",
     "Tue",
@@ -30,31 +32,35 @@ class HijriViewModel {
 
   ///below date variables to manage highlight, disable, selected date ui
   DateTime currentDisplayMonthYear = DateTime.now();
+
+  /// The currently selected date.
   DateTime selectedDate = DateTime.now();
+
+  /// Today's date.
   DateTime todayDate = DateTime.now();
 
-  ///this function is used to set each day block
-  Widget getDate({
+  /// This function is used to build each day block in the calendar grid.
+  Widget buildDateBox({
     required bool isHijriView,
     required double fontSize,
     required DateTime day,
     required Color highlightBorder,
     Color? backgroundColor,
-    required deActiveDateBorderColor,
+    required Color deActiveDateBorderColor,
     TextStyle? style,
     double? borderRadius,
     required Color defaultTextColor,
     required Color defaultBorder,
     required Color highlightTextColor,
-    Function(DateTime selectedDate)? onSelectedEnglishDate,
-    Function(HijriDate selectedDate)? onSelectedHijriDate,
+    void Function(DateTime selectedDate)? onSelectedEnglishDate,
+    void Function(HijriDate selectedDate)? onSelectedHijriDate,
     required bool isDisablePreviousNextMonthDates,
     required String locale,
   }) {
     bool isCurrentMonthDays = day.month == currentDisplayMonthYear.month;
 
     // Calculate Hijri Date
-    var hijridate = !adjustmentValue.isNegative
+    final HijriCalendarConfig hijridate = !adjustmentValue.isNegative
         ? HijriCalendarConfig.fromDate(DateTime(day.year, day.month, day.day)
             .add(Duration(days: adjustmentValue)))
         : HijriCalendarConfig.fromDate(DateTime(day.year, day.month, day.day)
@@ -105,7 +111,7 @@ class HijriViewModel {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             // English Day Text
             Text(
               DateFunctions.localizeNumber(day.day, locale),
@@ -128,7 +134,7 @@ class HijriViewModel {
             ),
 
             // Hijri Day Text (if view enabled)
-            if (isHijriView) ...[
+            if (isHijriView) ...<Widget>[
               const SizedBox(height: 2),
               Text(
                 DateFunctions.localizeNumber(hijridate.hDay, locale),
@@ -149,7 +155,7 @@ class HijriViewModel {
             ],
 
             // Event Indicator Dot
-            if (hasEvent) ...[
+            if (hasEvent) ...<Widget>[
               const SizedBox(height: 2),
               Container(
                 width: 4,
@@ -166,9 +172,9 @@ class HijriViewModel {
     );
   }
 
-  ///get hijri month year values by passing current displayed month & year
+  /// Returns a formatted string for the current Hijri month and year.
   String getHijriMonthYear() {
-    int lastDayOfMonth = DateFunctions.getLastDayOfCurrentMonth(
+    final int lastDayOfMonth = DateFunctions.getLastDayOfCurrentMonth(
             currentMonth: currentDisplayMonthYear)
         .day;
     String firstDateMonthName = HijriCalendarConfig.fromDate(DateTime(
@@ -185,7 +191,7 @@ class HijriViewModel {
   }
 
   ///show previous month
-  getPreviousMonth() {
+  void getPreviousMonth() {
     int year = currentDisplayMonthYear.year;
     int month = currentDisplayMonthYear.month - 1;
 
@@ -195,16 +201,16 @@ class HijriViewModel {
     }
 
     // Ensure the day is valid for the new month and year
-    int day = currentDisplayMonthYear.day;
-    int lastDayOfPreviousMonth = DateTime(year, month + 1, 0).day;
-    if (day > lastDayOfPreviousMonth) {
-      day = lastDayOfPreviousMonth;
-    }
-    currentDisplayMonthYear = DateTime(year, month, day);
+    final int day = currentDisplayMonthYear.day;
+    final int lastDayOfPreviousMonth = DateTime(year, month + 1, 0).day;
+    final int finalDay =
+        day > lastDayOfPreviousMonth ? lastDayOfPreviousMonth : day;
+
+    currentDisplayMonthYear = DateTime(year, month, finalDay);
   }
 
   ///show next month
-  getNextMonth() {
+  void getNextMonth() {
     int year = currentDisplayMonthYear.year;
     int month = currentDisplayMonthYear.month + 1;
 
@@ -213,11 +219,10 @@ class HijriViewModel {
       year++;
     }
 
-    int day = currentDisplayMonthYear.day;
-    int lastDayOfNextMonth = DateTime(year, month + 1, 0).day;
-    if (day > lastDayOfNextMonth) {
-      day = lastDayOfNextMonth;
-    }
-    currentDisplayMonthYear = DateTime(year, month, day);
+    final int day = currentDisplayMonthYear.day;
+    final int lastDayOfNextMonth = DateTime(year, month + 1, 0).day;
+    final int finalDay = day > lastDayOfNextMonth ? lastDayOfNextMonth : day;
+
+    currentDisplayMonthYear = DateTime(year, month, finalDay);
   }
 }

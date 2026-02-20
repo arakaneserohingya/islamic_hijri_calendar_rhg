@@ -33,28 +33,28 @@ class IslamicHijriCalendar extends StatefulWidget {
 
   /// The border color for the currently selected date or today's date.
   ///
-  /// Defaults to `Colors.blue`.
-  final Color highlightBorder;
+  /// If null, defaults to `Theme.of(context).colorScheme.primary`.
+  final Color? highlightBorder;
 
   /// The border color for regular (non-selected) dates.
   ///
-  /// Defaults to `Color(0xfff2f2f2)`.
-  final Color defaultBorder;
+  /// If null, defaults to `Theme.of(context).dividerColor.withValues(alpha: 0.1)`.
+  final Color? defaultBorder;
 
   /// The text color used for important dates like today's date.
   ///
-  /// Defaults to `Colors.white`.
-  final Color highlightTextColor;
+  /// If null, defaults to `Theme.of(context).colorScheme.onPrimary`.
+  final Color? highlightTextColor;
 
   /// The default text color for regular dates.
   ///
-  /// Defaults to `Colors.black`.
-  final Color defaultTextColor;
+  /// If null, defaults to `Theme.of(context).colorScheme.onSurface`.
+  final Color? defaultTextColor;
 
   /// The background color for the calendar grid cells.
   ///
-  /// Defaults to `Colors.white`.
-  final Color defaultBackColor;
+  /// If null, defaults to `Theme.of(context).colorScheme.surface`.
+  final Color? defaultBackColor;
 
   /// The adjustment value in days for the Hijri date.
   ///
@@ -98,21 +98,29 @@ class IslamicHijriCalendar extends StatefulWidget {
   /// This determines the translations, numeral systems, and text direction.
   final String locale;
 
+  /// The font family name specifically for Rohingya text.
+  ///
+  /// If provided, this font will be used when [locale] is set to 'rhg'.
+  /// This allows overriding the global [fontFamilyName] for Rohingya script.
+  final String? rohingyaFontFamily;
+
+  /// Creates a new [IslamicHijriCalendar].
   const IslamicHijriCalendar({
     super.key,
     this.isHijriView = true,
-    this.highlightBorder = Colors.blue,
-    this.defaultBorder = const Color(0xfff2f2f2),
-    this.highlightTextColor = Colors.white,
-    this.defaultTextColor = Colors.black,
-    this.defaultBackColor = Colors.white,
+    this.highlightBorder,
+    this.defaultBorder,
+    this.highlightTextColor,
+    this.defaultTextColor,
+    this.defaultBackColor,
     this.adjustmentValue = 0,
     this.getSelectedHijriDate,
     this.getSelectedEnglishDate,
     this.fontFamilyName = "",
     this.isGoogleFont = false,
     this.isDisablePreviousNextMonthDates = true,
-    this.locale = 'rhg',
+    required this.locale,
+    this.rohingyaFontFamily,
   });
 
   @override
@@ -121,7 +129,19 @@ class IslamicHijriCalendar extends StatefulWidget {
 
 class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
   HijriViewModel viewmodel = HijriViewModel();
-  List<DateTime> days = [];
+  List<DateTime> days = <DateTime>[];
+
+  Color get _resolvedHighlightBorder =>
+      widget.highlightBorder ?? Theme.of(context).colorScheme.primary;
+  Color get _resolvedDefaultBorder =>
+      widget.defaultBorder ??
+      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1);
+  Color get _resolvedHighlightTextColor =>
+      widget.highlightTextColor ?? Theme.of(context).colorScheme.onPrimary;
+  Color get _resolvedDefaultTextColor =>
+      widget.defaultTextColor ?? Theme.of(context).colorScheme.onSurface;
+  Color get _resolvedDefaultBackColor =>
+      widget.defaultBackColor ?? Theme.of(context).colorScheme.surface;
 
   @override
   void initState() {
@@ -144,7 +164,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
   String direction = 'None';
 
   ///on pan update event check direction
-  _onPanUpdate(DragUpdateDetails details) {
+  void _onPanUpdate(DragUpdateDetails details) {
     if (details.delta.dx > 0) {
       direction = 'Right';
     } else if (details.delta.dx < 0) {
@@ -157,7 +177,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
   }
 
   ///on pan gesture update current month
-  _onPanEnd() {
+  void _onPanEnd() {
     switch (direction) {
       case "None":
         break;
@@ -177,14 +197,14 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
   }
 
   ///click events of previous & next button
-  funcGetMonth({required bool isPrevious}) {
+  void funcGetMonth({required bool isPrevious}) {
     isPrevious ? viewmodel.getPreviousMonth() : viewmodel.getNextMonth();
     setState(() {});
   }
 
   ///get total days in month with previous & next month days in first & last week
   List<DateTime> _getDaysInMonth(DateTime date) {
-    days = [];
+    days = <DateTime>[];
 
     DateTime firstDayOfMonth = DateTime(date.year, date.month, 1);
     DateTime lastDayOfMonth = DateTime(date.year, date.month + 1, 0);
@@ -215,8 +235,8 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
       required double rowHeight,
       required double fontSize}) {
     return GestureDetector(
-      onPanUpdate: (details) => _onPanUpdate(details),
-      onPanEnd: (details) => _onPanEnd(),
+      onPanUpdate: (DragUpdateDetails details) => _onPanUpdate(details),
+      onPanEnd: (DragEndDetails details) => _onPanEnd(),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
@@ -227,24 +247,24 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
         itemCount: days.length,
         itemBuilder: (BuildContext context, int index) {
           ///single day block
-          return viewmodel.getDate(
+          return viewmodel.buildDateBox(
               isHijriView: widget.isHijriView!,
               fontSize: fontSize,
-              defaultTextColor: widget.defaultTextColor,
-              highlightTextColor: widget.highlightTextColor,
+              defaultTextColor: _resolvedDefaultTextColor,
+              highlightTextColor: _resolvedHighlightTextColor,
               day: days[index],
-              highlightBorder: widget.highlightBorder,
-              defaultBorder: widget.defaultBorder,
-              backgroundColor: widget.defaultBackColor,
-              deActiveDateBorderColor: widget.defaultBorder,
+              highlightBorder: _resolvedHighlightBorder,
+              defaultBorder: _resolvedDefaultBorder,
+              backgroundColor: _resolvedDefaultBackColor,
+              deActiveDateBorderColor: _resolvedDefaultBorder,
               style: textStyle,
-              onSelectedEnglishDate: (selectedDate) {
+              onSelectedEnglishDate: (DateTime selectedDate) {
                 if (widget.getSelectedEnglishDate != null) {
                   widget.getSelectedEnglishDate!(selectedDate);
                 }
                 setState(() {});
               },
-              onSelectedHijriDate: (selectedDate) {
+              onSelectedHijriDate: (HijriDate selectedDate) {
                 if (widget.getSelectedHijriDate != null) {
                   widget.getSelectedHijriDate!(selectedDate);
                 }
@@ -263,15 +283,15 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           IconButton(
             onPressed: () => funcGetMonth(isPrevious: true),
             icon: Icon(Icons.chevron_left_rounded,
-                size: 28, color: widget.highlightBorder),
+                size: 28, color: _resolvedHighlightBorder),
           ),
           GestureDetector(
             onTap: () async {
-              DateTime? pickedDate = await showDialog(
+              final DateTime? pickedDate = await showDialog<DateTime>(
                 context: context,
                 builder: (BuildContext context) {
                   return Theme(
@@ -280,16 +300,16 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                       colorScheme:
                           Theme.of(context).brightness == Brightness.dark
                               ? ColorScheme.dark(
-                                  primary: widget.highlightBorder,
-                                  onPrimary: widget.highlightTextColor,
-                                  onSurface: widget.defaultTextColor,
-                                  surface: widget.defaultBackColor,
+                                  primary: _resolvedHighlightBorder,
+                                  onPrimary: _resolvedHighlightTextColor,
+                                  onSurface: _resolvedDefaultTextColor,
+                                  surface: _resolvedDefaultBackColor,
                                 )
                               : ColorScheme.light(
-                                  primary: widget.highlightBorder,
-                                  onPrimary: widget.highlightTextColor,
-                                  onSurface: widget.defaultTextColor,
-                                  surface: widget.defaultBackColor,
+                                  primary: _resolvedHighlightBorder,
+                                  onPrimary: _resolvedHighlightTextColor,
+                                  onSurface: _resolvedDefaultTextColor,
+                                  surface: _resolvedDefaultBackColor,
                                 ),
                     ),
                     child: DatePickerDialog(
@@ -308,23 +328,23 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
               }
             },
             child: Column(
-              children: [
+              children: <Widget>[
                 Text(
                   // Localize Gregorian Year
                   "${DateFormat('MMMM').format(viewmodel.currentDisplayMonthYear)} ${DateFunctions.localizeNumber(viewmodel.currentDisplayMonthYear.year, widget.locale)}",
                   style: textStyle.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: fontSize + 4,
-                    color: widget.defaultTextColor,
+                    color: _resolvedDefaultTextColor,
                   ),
                 ),
-                if (widget.isHijriView!) ...[
+                if (widget.isHijriView!) ...<Widget>[
                   const SizedBox(height: 4),
                   Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(
-                      color: widget.highlightBorder.withValues(alpha: 0.1),
+                      color: _resolvedHighlightBorder.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
@@ -332,7 +352,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                       style: textStyle.copyWith(
                         fontSize: fontSize - 2,
                         fontWeight: FontWeight.w600,
-                        color: widget.highlightBorder,
+                        color: _resolvedHighlightBorder,
                       ),
                     ),
                   ),
@@ -343,7 +363,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
           IconButton(
             onPressed: () => funcGetMonth(isPrevious: false),
             icon: Icon(Icons.chevron_right_rounded,
-                size: 28, color: widget.highlightBorder),
+                size: 28, color: _resolvedHighlightBorder),
           ),
         ],
       ),
@@ -354,11 +374,11 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
-        children: List.generate(7, (index) {
+        children: List<Widget>.generate(7, (int index) {
           // viewmodel.headerOfDay is Mon(0)..Sun(6)
           // Config keys are 1=Mon..7=Sun.
-          int key = index + 1;
-          String dayName =
+          final int key = index + 1;
+          final String dayName =
               HijriCalendarConfig.getShortDayNames(widget.locale)[key] ?? "";
 
           return Expanded(
@@ -368,7 +388,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                 style: textStyle.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: widget.defaultTextColor.withValues(alpha: 0.6),
+                  color: _resolvedDefaultTextColor.withValues(alpha: 0.6),
                   letterSpacing: 0.5,
                 ),
               ),
@@ -380,15 +400,15 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
   }
 
   Widget _buildEventsList(TextStyle textStyle, {bool isFlexible = true}) {
-    final eventsContainer = Container(
+    final Widget eventsContainer = Container(
       decoration: BoxDecoration(
-        color: widget.defaultBackColor,
+        color: _resolvedDefaultBackColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: widget.highlightBorder.withValues(alpha: 0.15),
+          color: _resolvedHighlightBorder.withValues(alpha: 0.15),
           width: 1,
         ),
-        boxShadow: [
+        boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 8,
@@ -398,12 +418,12 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+        children: <Widget>[
           // Title Header Section
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: widget.highlightBorder.withValues(alpha: 0.05),
+              color: _resolvedHighlightBorder.withValues(alpha: 0.05),
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
@@ -415,7 +435,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
               style: textStyle.copyWith(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
-                color: widget.highlightBorder,
+                color: _resolvedHighlightBorder,
                 letterSpacing: 0.3,
               ),
             ),
@@ -424,16 +444,18 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
           Divider(
             height: 1,
             thickness: 1,
-            color: widget.highlightBorder.withValues(alpha: 0.1),
+            color: _resolvedHighlightBorder.withValues(alpha: 0.1),
           ),
           // Events List
           Expanded(
             child: Builder(
-              builder: (context) {
+              builder: (BuildContext context) {
                 // Collect events for the visible days
-                List<Map<String, String>> visibleEvents = [];
-                for (var date in days) {
-                  var hijriDate = !viewmodel.adjustmentValue.isNegative
+                final List<Map<String, String>> visibleEvents =
+                    <Map<String, String>>[];
+                for (DateTime date in days) {
+                  final HijriCalendarConfig hijriDate = !viewmodel
+                          .adjustmentValue.isNegative
                       ? HijriCalendarConfig.fromDate(
                           DateTime(date.year, date.month, date.day)
                               .add(Duration(days: viewmodel.adjustmentValue)))
@@ -445,7 +467,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                               ?[hijriDate.hMonth]
                           ?.containsKey(hijriDate.hDay) ??
                       false) {
-                    String dayStr;
+                    final String dayStr;
                     if (widget.locale == 'rhg') {
                       dayStr = DateFunctions.convertEnglishToHijriNumber(
                           hijriDate.hDay);
@@ -455,7 +477,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                       dayStr = hijriDate.hDay.toString();
                     }
 
-                    visibleEvents.add({
+                    visibleEvents.add(<String, String>{
                       'day': dayStr,
                       'month': hijriDate.getLongMonthName(),
                       'name': HijriCalendarConfig.islamicEvents[widget.locale]![
@@ -468,18 +490,18 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                   return Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: <Widget>[
                         Icon(Icons.event_busy_rounded,
-                            color:
-                                widget.defaultTextColor.withValues(alpha: 0.3),
+                            color: _resolvedDefaultTextColor.withValues(
+                                alpha: 0.3),
                             size: 24),
                         const SizedBox(height: 4),
                         Text(
                           HijriCalendarConfig.getLocalizedString(
                               widget.locale, 'no_events'),
                           style: textStyle.copyWith(
-                            color:
-                                widget.defaultTextColor.withValues(alpha: 0.5),
+                            color: _resolvedDefaultTextColor.withValues(
+                                alpha: 0.5),
                             fontSize: 14,
                           ),
                         ),
@@ -492,43 +514,44 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   itemCount: visibleEvents.length,
-                  separatorBuilder: (context, index) =>
+                  separatorBuilder: (BuildContext context, int index) =>
                       const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    final event = visibleEvents[index];
+                  itemBuilder: (BuildContext context, int index) {
+                    final Map<String, String> event = visibleEvents[index];
                     return Container(
                       decoration: BoxDecoration(
-                        color: widget.highlightBorder.withValues(alpha: 0.03),
+                        color: _resolvedHighlightBorder.withValues(alpha: 0.03),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: widget.highlightBorder.withValues(alpha: 0.1),
+                          color:
+                              _resolvedHighlightBorder.withValues(alpha: 0.1),
                           width: 1,
                         ),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          children: [
+                          children: <Widget>[
                             // Date Box
                             Container(
                               width: 80,
                               height: 70,
                               decoration: BoxDecoration(
-                                color: widget.highlightBorder
-                                    .withValues(alpha: 0.1),
+                                color: _resolvedHighlightBorder.withValues(
+                                    alpha: 0.1),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
+                                  children: <Widget>[
                                     Text(
                                       event['day']!,
                                       style: textStyle.copyWith(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold,
-                                        color: widget.highlightBorder,
+                                        color: _resolvedHighlightBorder,
                                         height: 1.0,
                                       ),
                                     ),
@@ -540,7 +563,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                                         style: textStyle.copyWith(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
-                                          color: widget.highlightBorder
+                                          color: _resolvedHighlightBorder
                                               .withValues(alpha: 0.8),
                                           letterSpacing: 0.5,
                                         ),
@@ -558,7 +581,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                                 style: textStyle.copyWith(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: widget.defaultTextColor,
+                                  color: _resolvedDefaultTextColor,
                                   height: 1.3,
                                 ),
                                 maxLines: 2,
@@ -594,30 +617,40 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
     viewmodel.adjustmentValue = widget.adjustmentValue;
 
     TextStyle textStyle;
+    String? effectiveFontFamily =
+        (widget.locale == 'rhg' && widget.rohingyaFontFamily != null)
+            ? widget.rohingyaFontFamily
+            : widget.fontFamilyName;
+
     if (widget.isGoogleFont == true &&
-        widget.fontFamilyName != null &&
-        widget.fontFamilyName!.isNotEmpty) {
+        effectiveFontFamily != null &&
+        effectiveFontFamily.isNotEmpty) {
       try {
-        textStyle = GoogleFonts.getFont(widget.fontFamilyName!);
+        textStyle = GoogleFonts.getFont(effectiveFontFamily);
       } catch (e) {
         // Fallback if the specific Google Font is not found or fails to load
-        textStyle = const TextStyle();
+        textStyle = Theme.of(context).textTheme.bodyMedium ?? const TextStyle();
       }
     } else {
-      textStyle =
-          (widget.fontFamilyName == null || widget.fontFamilyName!.isEmpty)
-              ? const TextStyle()
-              : TextStyle(fontFamily: widget.fontFamilyName!);
+      final TextStyle baseStyle =
+          Theme.of(context).textTheme.bodyMedium ?? const TextStyle();
+      textStyle = (effectiveFontFamily == null || effectiveFontFamily.isEmpty)
+          ? baseStyle
+          : baseStyle.copyWith(
+              fontFamily: effectiveFontFamily,
+              package: 'islamic_hijri_calendar_rhg',
+            );
     }
 
-    return LayoutBuilder(builder: (context, constraints) {
-      double parentWidth = constraints.maxWidth;
-      double parentHeight = constraints.maxHeight;
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      final double parentWidth = constraints.maxWidth;
+      final double parentHeight = constraints.maxHeight;
 
       ///minimum height of particular day box
-      double minRowHeight = 70;
+      const double minRowHeight = 70;
       double fontSize = 16;
-      bool isWide = parentWidth > 600;
+      final bool isWide = parentWidth > 600;
 
       if (parentWidth > 600) {
         fontSize = 18;
@@ -627,70 +660,74 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
         fontSize = 14;
       }
 
-      final calendarGrid = funcCalendarDaysView(
+      final Widget calendarGrid = funcCalendarDaysView(
           textStyle: textStyle, rowHeight: minRowHeight, fontSize: fontSize);
 
-      return SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(12.0),
-          decoration: BoxDecoration(
-            color: widget.defaultBackColor,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              )
-            ],
-          ),
-          child: isWide
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Calendar Section (Left)
-                    Expanded(
-                      flex: 3,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          _buildHeader(context, textStyle, fontSize),
-                          _buildWeekDays(textStyle),
-                          const Divider(height: 1),
-                          Expanded(
-                              child:
-                                  SingleChildScrollView(child: calendarGrid)),
-                        ],
-                      ),
-                    ),
-                    const VerticalDivider(width: 30, thickness: 1),
-                    // Events Section (Right)
-                    Expanded(
-                      flex: 2,
-                      // In Row layout, we almost always want flexible height if parent is constrained
-                      // If parentHeight is internal scrollview infinite, we might need fallback?
-                      // But Row in infinite height is weird. Assuming constrained mostly.
-                      child: _buildEventsList(textStyle,
-                          isFlexible: parentHeight != double.infinity),
-                    ),
-                  ],
+      return Directionality(
+        textDirection: TextDirection.ltr,
+        child: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.all(12.0),
+            decoration: BoxDecoration(
+              color: _resolvedDefaultBackColor,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
                 )
-              : Column(
-                  children: [
-                    _buildHeader(context, textStyle, fontSize),
-                    _buildWeekDays(textStyle),
-                    const Divider(height: 1),
-                    calendarGrid,
-                    const SizedBox(height: 10),
-                    if (parentHeight != double.infinity)
+              ],
+            ),
+            child: isWide
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      // Calendar Section (Left)
                       Expanded(
-                          child: _buildEventsList(textStyle, isFlexible: true))
-                    else
-                      _buildEventsList(textStyle, isFlexible: false),
-                  ],
-                ),
-        ), // Container
-      ); // SafeArea
+                        flex: 3,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            _buildHeader(context, textStyle, fontSize),
+                            _buildWeekDays(textStyle),
+                            const Divider(height: 1),
+                            Expanded(
+                                child:
+                                    SingleChildScrollView(child: calendarGrid)),
+                          ],
+                        ),
+                      ),
+                      const VerticalDivider(width: 30, thickness: 1),
+                      // Events Section (Right)
+                      Expanded(
+                        flex: 2,
+                        // In Row layout, we almost always want flexible height if parent is constrained
+                        // If parentHeight is internal scrollview infinite, we might need fallback?
+                        // But Row in infinite height is weird. Assuming constrained mostly.
+                        child: _buildEventsList(textStyle,
+                            isFlexible: parentHeight != double.infinity),
+                      ),
+                    ],
+                  )
+                : Column(
+                    children: <Widget>[
+                      _buildHeader(context, textStyle, fontSize),
+                      _buildWeekDays(textStyle),
+                      const Divider(height: 1),
+                      calendarGrid,
+                      const SizedBox(height: 10),
+                      if (parentHeight != double.infinity)
+                        Expanded(
+                            child:
+                                _buildEventsList(textStyle, isFlexible: true))
+                      else
+                        _buildEventsList(textStyle, isFlexible: false),
+                    ],
+                  ),
+          ), // Container
+        ),
+      ); // Directionality
     }); // LayoutBuilder
   }
 }

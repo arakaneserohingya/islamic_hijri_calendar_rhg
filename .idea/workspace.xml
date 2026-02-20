@@ -5,9 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="973345e1-d4dc-4fc4-bfef-f776c858f2d2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_graph.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_graph.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/islamic_hijri_calendar_rhg.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/islamic_hijri_calendar_rhg.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analysis_options.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/analysis_options.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/banner1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/contributors.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/date_functions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/date_functions.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/hijri_calendar_config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/hijri_calendar_config.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/hijri_date.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/hijri_date.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/hijri_month_week_names.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/hijri_month_week_names.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/hijri_view_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/hijri_view_model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/islamic_hijri_calendar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/islamic_hijri_calendar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +48,7 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/DevCodeSpace/islamic_hijri_calendar/&quot;,
+    &quot;url&quot;: &quot;https://github.com/arakaneserohingya/islamic_hijri_calendar_rhg.git&quot;,
     &quot;accountId&quot;: &quot;9522eb6a-29ab-460e-8db1-a71b4698170e&quot;
   }
 }</component>

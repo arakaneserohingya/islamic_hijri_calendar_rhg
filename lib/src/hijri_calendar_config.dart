@@ -2,34 +2,53 @@ import 'package:intl/intl.dart';
 import 'date_functions.dart';
 import 'hijri_month_week_names.dart';
 
+/// Configuration for the Hijri Calendar.
 class HijriCalendarConfig {
-  ///set default configuration for hijri calendar
-  ///set default configuration for hijri calendar
+  /// The current language for localization.
   static String language = 'rhg';
+
+  /// The length of the current month.
   late int lengthOfMonth;
+
+  /// The Hijri day.
   int hDay = 1;
+
+  /// The Hijri month.
   late int hMonth;
+
+  /// The Hijri year.
   late int hYear;
+
+  /// The day of the week (1: Monday, ..., 7: Sunday).
   int? wkDay;
+
+  /// Long month name (localized).
   late String longMonthName;
+
+  /// Short month name (localized).
   late String shortMonthName;
+
+  /// Day of the week name (localized).
   late String dayWeName;
+
+  /// Optional adjustments for specific months.
   Map<int, int>? adjustments;
 
-  static const Map<String, Map<String, Map<int, String>>> _local = {
-    'en': {
+  static const Map<String, Map<String, Map<int, String>>> _local =
+      <String, Map<String, Map<int, String>>>{
+    'en': <String, Map<int, String>>{
       'long': monthNames,
       'short': monthShortNames,
       'days': wdNames,
       'short_days': shortWdNames
     },
-    'rhg': {
+    'rhg': <String, Map<int, String>>{
       'long': rhgMonthNames,
       'short': rhgMonthShortNames,
       'days': rhgWkNames,
       'short_days': rhgShortWdNames
     },
-    'ar': {
+    'ar': <String, Map<int, String>>{
       'long': arMonthNames,
       'short': arMonthShortNames,
       'days': arWkNames,
@@ -38,52 +57,55 @@ class HijriCalendarConfig {
   };
 
   /// Islamic Events Map: Language -> Month -> {Day: Event Name}
-  static const Map<String, Map<int, Map<int, String>>> islamicEvents = {
-    'rhg': {
-      1: {1: '𐴕𐴝𐴘𐴝 𐴏𐴝𐴓', 10: '𐴀𐴝𐴆𐴟𐴌𐴝'},
-      3: {12: '𐴔𐴡𐴓𐴟𐴊 𐴕𐴡𐴁𐴞'},
-      7: {27: '𐴔𐴝𐴌𐴝𐴅'},
-      8: {15: '𐴏𐴡𐴁𐴠-𐴁𐴡𐴌𐴝𐴃'},
-      9: {1: '𐴌𐴡𐴔𐴎𐴝𐴕', 27: '𐴓𐴡𐴘𐴓𐴝𐴃𐴟𐴓 𐴒𐴡𐴊𐴡𐴌'},
-      10: {1: '𐴌𐴡𐴔𐴎𐴝𐴕𐴠 𐴍𐴞𐴊'},
-      12: {9: '𐴀𐴝𐴌𐴝𐴉𐴝 𐴊𐴞𐴕', 10: '𐴒𐴟𐴌𐴁𐴝𐴕𐴠 𐴍𐴞𐴊'},
+  static const Map<String, Map<int, Map<int, String>>> islamicEvents =
+      <String, Map<int, Map<int, String>>>{
+    'rhg': <int, Map<int, String>>{
+      1: <int, String>{1: '𐴕𐴝𐴘𐴝 𐴏𐴝𐴓', 10: '𐴀𐴝𐴆𐴟𐴌𐴝'},
+      3: <int, String>{12: '𐴔𐴡𐴓𐴟𐴊 𐴕𐴡𐴁𐴞'},
+      7: <int, String>{27: '𐴔𐴝𐴌𐴝𐴅'},
+      8: <int, String>{15: '𐴏𐴡𐴁𐴠-𐴁𐴡𐴌𐴝𐴃'},
+      9: <int, String>{1: '𐴌𐴡𐴔𐴎𐴝𐴕', 27: '𐴓𐴡𐴘𐴓𐴝𐴃𐴟𐴓 𐴒𐴡𐴊𐴡𐴌'},
+      10: <int, String>{1: '𐴌𐴡𐴔𐴎𐴝𐴕𐴠 𐴍𐴞𐴊'},
+      12: <int, String>{9: '𐴀𐴝𐴌𐴝𐴉𐴝 𐴊𐴞𐴕', 10: '𐴒𐴟𐴌𐴁𐴝𐴕𐴠 𐴍𐴞𐴊'},
     },
-    'en': {
-      1: {1: 'Islamic New Year', 10: 'Ashura'},
-      3: {12: 'Mawlid al-Nabi'},
-      7: {27: 'Isra and Mi\'raj'},
-      8: {15: 'Mid-Sha\'ban'},
-      9: {1: 'First of Ramadan', 27: 'Laylat al-Qadr'},
-      10: {1: 'Eid al-Fitr'},
-      12: {9: 'Day of Arafah', 10: 'Eid al-Adha'},
+    'en': <int, Map<int, String>>{
+      1: <int, String>{1: 'Islamic New Year', 10: 'Ashura'},
+      3: <int, String>{12: 'Mawlid al-Nabi'},
+      7: <int, String>{27: 'Isra and Mi\'raj'},
+      8: <int, String>{15: 'Mid-Sha\'ban'},
+      9: <int, String>{1: 'First of Ramadan', 27: 'Laylat al-Qadr'},
+      10: <int, String>{1: 'Eid al-Fitr'},
+      12: <int, String>{9: 'Day of Arafah', 10: 'Eid al-Adha'},
     },
-    'ar': {
-      1: {1: 'رأس السنة الهجرية', 10: 'عاشوراء'},
-      3: {12: 'المولد النبوي'},
-      7: {27: 'الإسراء والمعراج'},
-      8: {15: 'النصف من شعبان'},
-      9: {1: 'أول رمضان', 27: 'ليلة القدر'},
-      10: {1: 'عيد الفطر'},
-      12: {9: 'يوم عرفة', 10: 'عيد الأضحى'},
+    'ar': <int, Map<int, String>>{
+      1: <int, String>{1: 'رأس السنة الهجرية', 10: 'عاشوراء'},
+      3: <int, String>{12: 'المولد النبوي'},
+      7: <int, String>{27: 'الإسراء والمعراج'},
+      8: <int, String>{15: 'النصف من شعبان'},
+      9: <int, String>{1: 'أول رمضان', 27: 'ليلة القدر'},
+      10: <int, String>{1: 'عيد الفطر'},
+      12: <int, String>{9: 'يوم عرفة', 10: 'عيد الأضحى'},
     }
   };
 
   /// Localized UI Strings
-  static const Map<String, Map<String, String>> localizedStrings = {
-    'en': {
+  static const Map<String, Map<String, String>> localizedStrings =
+      <String, Map<String, String>>{
+    'en': <String, String>{
       'events_title': 'Calendar Events',
       'no_events': 'No events this month',
     },
-    'rhg': {
+    'rhg': <String, String>{
       'events_title': '𐴋𐴠𐴓𐴝𐴔𐴊𐴝𐴌 𐴀𐴡𐴎𐴝𐴒𐴡𐴌𐴞',
       'no_events': '𐴀𐴞 𐴔𐴝𐴖𐴡𐴃 𐴀𐴡𐴎𐴝𐴒𐴡𐴌𐴞 𐴕𐴝𐴘',
     },
-    'ar': {
+    'ar': <String, String>{
       'events_title': 'أحداث التقويم',
       'no_events': 'لا توجد أحداث هذا الشهر',
     },
   };
 
+  /// Get a localized string for a specific [key] and [locale].
   static String getLocalizedString(String locale, String key) {
     return localizedStrings[locale]?[key] ?? localizedStrings['en']![key]!;
   }
@@ -94,6 +116,7 @@ class HijriCalendarConfig {
     return HijriCalendarConfig();
   }
 
+  /// Default constructor for [HijriCalendarConfig].
   HijriCalendarConfig();
 
   ///set configuration by datetime
@@ -101,6 +124,7 @@ class HijriCalendarConfig {
     gregorianToHijri(date.year, date.month, date.day);
   }
 
+  /// Initialize with current date.
   HijriCalendarConfig.now() {
     _now();
   }
@@ -141,41 +165,41 @@ class HijriCalendarConfig {
   }
 
   ///get length of year
-  int lengthOfYear({int? year = 0}) {
+  int lengthOfYear({int year = 0}) {
     int total = 0;
-    if (year == 0) year = hYear;
-    for (int m = 0; m <= 11; m++) {
-      total += getDaysInMonth(year!, m);
+    int hYearValue = year == 0 ? hYear : year;
+    for (int m = 1; m <= 12; m++) {
+      total += getDaysInMonth(hYearValue, m);
     }
     return total;
   }
 
   ///convert hijri date to gregorian datetime
-  DateTime hijriToGregorian(year, month, day) {
-    int iy = year;
-    int im = month;
-    int id = day;
-    int ii = iy - 1;
-    int iln = (ii * 12) + 1 + (im - 1);
-    int i = iln - 16260;
-    int mcjdn = id + _ummalquraDataIndex(i - 1)! - 1;
-    int cjdn = mcjdn + 2400000;
+  DateTime hijriToGregorian(int year, int month, int day) {
+    final int iy = year;
+    final int im = month;
+    final int id = day;
+    final int ii = iy - 1;
+    final int iln = (ii * 12) + 1 + (im - 1);
+    final int i = iln - 16260;
+    final int mcjdn = id + _ummalquraDataIndex(i - 1)! - 1;
+    final int cjdn = mcjdn + 2400000;
     return julianToGregorian(cjdn);
   }
 
   ///convert julian to gregorian calendar
-  DateTime julianToGregorian(julianDate) {
+  DateTime julianToGregorian(int julianDate) {
     //source from: http://keith-wood.name/calendars.html
-    int z = (julianDate + 0.5).floor();
+    final int z = (julianDate + 0.5).floor();
     int a = ((z - 1867216.25) / 36524.25).floor();
     a = z + 1 + a - (a / 4).floor();
-    int b = a + 1524;
-    int c = ((b - 122.1) / 365.25).floor();
-    int d = (365.25 * c).floor();
-    int e = ((b - d) / 30.6001).floor();
-    int day = b - d - (e * 30.6001).floor();
+    final int b = a + 1524;
+    final int c = ((b - 122.1) / 365.25).floor();
+    final int d = (365.25 * c).floor();
+    final int e = ((b - d) / 30.6001).floor();
+    final int day = b - d - (e * 30.6001).floor();
     //var wd = _gMod(julianDate + 1, 7) + 1;
-    int month = e - (e > 13.5 ? 13 : 1);
+    final int month = e - (e > 13.5 ? 13 : 1);
     int year = c - (month > 2.5 ? 4716 : 4715);
     if (year <= 0) {
       year--;
@@ -219,9 +243,9 @@ class HijriCalendarConfig {
 
     a = ((cjdn - 1867216.25) / 36524.25).floor();
     jgc = a - (a / 4.0).floor() + 1;
-    int b = cjdn + jgc + 1524;
+    final int b = cjdn + jgc + 1524;
     int c = ((b - 122.1) / 365.25).floor();
-    int d = (365.25 * c).floor();
+    final int d = (365.25 * c).floor();
     month = ((b - d) / 30.6001).floor();
     day = (b - d) - (30.6001 * month).floor();
 
@@ -235,7 +259,7 @@ class HijriCalendarConfig {
 
     // compute Modified Chronological Julian Day Number (MCJDN)
 
-    int mcjdn = cjdn - 2400000;
+    final int mcjdn = cjdn - 2400000;
 
     // the MCJDN's of the start of the lunations in the Umm al-Qura calendar are stored in 'islamcalendar_dat.js'
     int i;
@@ -245,19 +269,20 @@ class HijriCalendarConfig {
 
     // compute and output the Umm al-Qura calendar date
 
-    int iln = i + 16260;
-    int ii = ((iln - 1) / 12).floor();
-    int iy = ii + 1;
-    int im = iln - 12 * ii;
-    int id = mcjdn - _ummalquraDataIndex(i - 1)! + 1;
-    int ml = _ummalquraDataIndex(i)! - _ummalquraDataIndex(i - 1)!;
+    final int iln = i + 16260;
+    final int ii = ((iln - 1) / 12).floor();
+    final int iy = ii + 1;
+    final int im = iln - 12 * ii;
+    final int id = mcjdn - _ummalquraDataIndex(i - 1)! + 1;
+    final int ml = _ummalquraDataIndex(i)! - _ummalquraDataIndex(i - 1)!;
     lengthOfMonth = ml;
-    int wd = _gMod(cjdn + 1, 7);
+    final int wd = _gMod(cjdn + 1, 7);
 
     wkDay = wd == 0 ? 7 : wd;
     return hDate(iy, im, id);
   }
 
+  /// Returns a short formatted string using "dd/mm/yyyy".
   String hDate(int year, int month, int day) {
     hYear = year;
     hMonth = month;
@@ -274,7 +299,7 @@ class HijriCalendarConfig {
   }
 
   ///format date time values to string
-  String format(year, month, day, format) {
+  String format(int year, int month, int day, String format) {
     String newFormat = format;
 
     String dayString;
@@ -287,7 +312,7 @@ class HijriCalendarConfig {
       yearString = DateFunctions.convertEnglishToHijriNumber(year);
     } else if (language == 'ar') {
       // Use Arabic numerals
-      var f = NumberFormat("00", "ar");
+      final NumberFormat f = NumberFormat("00", "ar");
       dayString = f.format(day);
       monthString = f.format(month);
       yearString = NumberFormat("0000", "ar").format(year);
@@ -396,7 +421,7 @@ class HijriCalendarConfig {
   }
 
   ///list of year, month & day
-  List<int?> toList() => [hYear, hMonth, hDay];
+  List<int?> toList() => <int?>[hYear, hMonth, hDay];
 
   ///get full formatted date
   String fullDate() {
@@ -418,9 +443,13 @@ class HijriCalendarConfig {
 
   ///check hijri date is valid or not
   bool validateHijri(int year, int month, int day) {
-    if (month < 1 || month > 12) return false;
+    if (month < 1 || month > 12) {
+      return false;
+    }
 
-    if (day < 1 || day > 30) return false;
+    if (day < 1 || day > 30) {
+      return false;
+    }
     return true;
   }
 
@@ -436,6 +465,6 @@ class HijriCalendarConfig {
 
   ///get day name
   String getDayName() {
-    return _local[language]!['days']![wkDay]!;
+    return _local[language]!['days']![wkDay!]!;
   }
 }

@@ -1,5 +1,8 @@
-///Hijri month full names
-const Map<int, String> monthNames = {
+/// Hijri month and week names for different languages.
+library hijri_month_week_names;
+
+/// Hijri month full names in English.
+const Map<int, String> monthNames = <int, String>{
   1: 'Muharram',
   2: 'Safar',
   3: 'Rabi\' Al-Awwal',
@@ -14,8 +17,8 @@ const Map<int, String> monthNames = {
   12: 'Dhu Al-Hijjah'
 };
 
-///Hijri month short names
-const Map<int, String> monthShortNames = {
+/// Hijri month short names in English.
+const Map<int, String> monthShortNames = <int, String>{
   1: 'Muh',
   2: 'Saf',
   3: 'Rab1',
@@ -30,8 +33,8 @@ const Map<int, String> monthShortNames = {
   12: 'DhuH'
 };
 
-///calendar week names full
-const Map<int, String> wdNames = {
+/// Calendar week names in full English.
+const Map<int, String> wdNames = <int, String>{
   7: "Sunday",
   1: "Monday",
   2: "Tuesday",
@@ -41,8 +44,8 @@ const Map<int, String> wdNames = {
   6: "Saturday"
 };
 
-///calendar week names short
-const Map<int, String> shortWdNames = {
+/// Calendar week names short in English.
+const Map<int, String> shortWdNames = <int, String>{
   7: "Sun",
   1: "Mon",
   2: "Tue",
@@ -52,8 +55,8 @@ const Map<int, String> shortWdNames = {
   6: "Sat"
 };
 
-///Rohingya month full names
-const Map<int, String> rhgMonthNames = {
+/// Rohingya month full names.
+const Map<int, String> rhgMonthNames = <int, String>{
   1: '𐴔𐴡𐴇𐴥𐴡𐴌𐴡𐴔',
   2: '𐴏𐴥𐴡𐴉𐴡𐴌',
   3: '𐴌𐴡𐴁𐴞𐴀𐴟𐴓𐴢 𐴀𐴝𐴖𐴧𐴝𐴓𐴢',
@@ -66,22 +69,10 @@ const Map<int, String> rhgMonthNames = {
   10: '𐴐𐴝𐴖𐴧𐴝𐴓𐴢',
   11: '𐴎𐴟𐴓𐴑𐴝𐴊𐴤𐴝',
   12: '𐴎𐴟𐴓𐴇𐴥𐴝𐴅𐴧𐴝'
-  // ItemTexts('Muharram', '𐴔𐴡𐴇𐴥𐴡𐴌𐴡𐴔𐴢'),
-  // ItemTexts('Safar', '𐴏𐴥𐴡𐴉𐴡𐴌'),
-  // ItemTexts('Rabi Ul Awal', '𐴌𐴡𐴁𐴞𐴀𐴟𐴓𐴢 𐴀𐴝𐴖𐴧𐴝𐴓𐴢'),
-  // ItemTexts('Rabi Ul Akhir', '𐴌𐴡𐴁𐴞𐴀𐴟𐴓𐴢 𐴀𐴝𐴈𐴥𐴠𐴌'),
-  // ItemTexts('Jamadil Awal', '𐴅𐴟𐴔𐴝𐴊𐴞𐴓𐴢 𐴀𐴝𐴖𐴧𐴝𐴓𐴢'),
-  // ItemTexts('Jamadil Akhir', '𐴅𐴟𐴔𐴝𐴞𐴓𐴢 𐴀𐴝𐴈𐴥𐴠𐴌'),
-  // ItemTexts('Rajab', '𐴌𐴡𐴅𐴡𐴁𐴢'),
-  // ItemTexts('Shaban', '𐴐𐴤𐴝𐴁𐴝𐴕'),
-  // ItemTexts('Ramadan', '𐴌𐴡𐴔𐴎𐴝𐴕'),
-  // ItemTexts('Shawwal', '𐴐𐴝𐴖𐴧𐴝𐴓𐴢'),
-  // ItemTexts('Dhul Qadah', '𐴎𐴟𐴓𐴑𐴝𐴊𐴤𐴝'),
-  // ItemTexts('Dhul Hajja', '𐴎𐴟𐴓𐴇𐴥𐴝𐴅𐴧𐴝'),
 };
 
-///Rohingya month short names
-const Map<int, String> rhgMonthShortNames = {
+/// Rohingya month short names.
+const Map<int, String> rhgMonthShortNames = <int, String>{
   1: '𐴔𐴡𐴇𐴥𐴡',
   2: '𐴏𐴥𐴡𐴉𐴡𐴌',
   3: '𐴌𐴡𐴁𐴞-1',
@@ -96,30 +87,30 @@ const Map<int, String> rhgMonthShortNames = {
   12: '𐴎𐴟𐴓𐴇𐴥𐴝'
 };
 
-///Rohingya week names full
-const Map<int, String> rhgWkNames = {
-  7: "𐴌𐴡𐴁𐴞𐴁𐴝𐴌",
-  1: "𐴏𐴡𐴔𐴁𐴝𐴌",
-  2: "𐴔𐴡b𐴝𐴓𐴁𐴝𐴌",
-  3: "𐴁𐴟𐴊𐴁𐴝𐴌",
-  4: "𐴁𐴞𐴏𐴞𐴃𐴁𐴝𐴌",
-  5: "F𐴟𐴑a𐴁𐴝𐴌",
-  6: "𐴏𐴡𐴕𐴞𐴁𐴝𐴌"
+/// Rohingya week names full.
+const Map<int, String> rhgWkNames = <int, String>{
+  7: "𐴌𐴡𐴘𐴁𐴝𐴌",
+  1: "𐴐𐴥𐴡𐴔𐴁𐴝𐴌",
+  2: "𐴔𐴡𐴚𐴒𐴡𐴓𐴁𐴝𐴌",
+  3: "𐴁𐴟𐴙𐴋𐴁𐴝𐴌",
+  4: "𐴁𐴞𐴐𐴥𐴞𐴁𐴧𐴝𐴌",
+  5: "𐴐𐴥𐴟𐴑𐴧𐴟𐴌𐴁𐴝𐴌",
+  6: "𐴐𐴥𐴡𐴕𐴞𐴁𐴝𐴌"
 };
 
-///Rohingya week names short
-const Map<int, String> rhgShortWdNames = {
+/// Rohingya week names short.
+const Map<int, String> rhgShortWdNames = <int, String>{
   7: "𐴌𐴡𐴁𐴞",
   1: "𐴏𐴡𐴔",
-  2: "𐴔𐴡b𐴝𐴓",
-  3: "𐴁𐴟𐴊",
-  4: "𐴁𐴞𐴏𐴞𐴃",
-  5: "𐴏𐴟𐴑𐴁𐴝𐴌",
-  6: "𐴏𐴡𐴕𐴞"
+  2: "𐴔𐴡𐴚𐴒𐴡𐴓",
+  3: "𐴁𐴟𐴙𐴋",
+  4: "𐴁𐴞𐴐𐴥𐴞𐴁",
+  5: "𐴐𐴥𐴟𐴑𐴧𐴟𐴌",
+  6: "𐴐𐴥𐴡𐴕𐴞"
 };
 
-///Arabic month full names
-const Map<int, String> arMonthNames = {
+/// Arabic month full names.
+const Map<int, String> arMonthNames = <int, String>{
   1: 'محرم',
   2: 'صفر',
   3: 'ربيع الأول',
@@ -134,8 +125,8 @@ const Map<int, String> arMonthNames = {
   12: 'ذو الحجة'
 };
 
-///Arabic month short names
-const Map<int, String> arMonthShortNames = {
+/// Arabic month short names.
+const Map<int, String> arMonthShortNames = <int, String>{
   1: 'محرم',
   2: 'صفر',
   3: 'ربيع ١',
@@ -150,8 +141,8 @@ const Map<int, String> arMonthShortNames = {
   12: 'ذو الحجة'
 };
 
-///Arabic week names full
-const Map<int, String> arWkNames = {
+/// Arabic week names full.
+const Map<int, String> arWkNames = <int, String>{
   7: "الأحد",
   1: "الاثنين",
   2: "الثلاثاء",
@@ -161,8 +152,8 @@ const Map<int, String> arWkNames = {
   6: "السبت"
 };
 
-///Arabic week names short
-const Map<int, String> arShortWdNames = {
+/// Arabic week names short.
+const Map<int, String> arShortWdNames = <int, String>{
   7: "أحد",
   1: "اثنين",
   2: "ثلاثاء",
@@ -172,8 +163,8 @@ const Map<int, String> arShortWdNames = {
   6: "سبت"
 };
 
-///ummAlquraDate values
-const List<int> ummAlquraDateArray = [
+/// Umm Al-Qura date values.
+const List<int> ummAlquraDateArray = <int>[
   28607,
   28636,
   28665,
