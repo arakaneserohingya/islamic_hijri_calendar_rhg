@@ -2,7 +2,7 @@ name: example
 description: "Demonstrates how to use the islamic_hijri_calendar_rhg package with multi-language support."
 publish_to: 'none' # Standard for package examples to prevent accidental publishing of the example itself
 
-version: 1.0.0+1
+version: 1.1.0+1
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
